@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://jeffreynoh.github/</loc>
+    <loc>/</loc>
     <lastmod>2021-03-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://jeffreynoh.github/2021/03/28/learning-how-to-clean-text/</loc>
+    <loc>/2021/03/28/learning-how-to-clean-text/</loc>
     <lastmod>2021-03-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://jeffreynoh.github/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2021-03-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://jeffreynoh.github/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2021-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://jeffreynoh.github/categories/</loc>
+    <loc>/categories/</loc>
   </url><url>
-    <loc>http://jeffreynoh.github/tags/</loc>
+    <loc>/tags/</loc>
   </url>
 </urlset>
