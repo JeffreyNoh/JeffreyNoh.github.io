@@ -124,10 +124,10 @@ library(kableExtra)</code></pre>
   Wins = sum(W))</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;Team&#39;. You can override using the `.groups` argument.</code></pre>
 <p>Here I am looking at the correlation between the team with the lowest shots taken during a season and the fewest number of wins at the conclusion of that season.</p>
-<p>In order to do that, I am going to create a dataframe that has less than 2300 total shots on goal. I chose 2300 because when we look at our data, we can see that most 2300 is about the average number of shots taken by teams. I am also going to create a dataframe that exposes a team with less than 25 wins.</p>
+<p>In order to do that, I am going to create a dataframe that has less than 2300 total shots on goal. I chose 2300 because when we look at our data, we can see that 2300 is about the average number of shots taken by teams. I am also going to create a dataframe that exposes a team with less than 25 wins.</p>
 <pre class="r"><code>lowshots &lt;- shottotal %&gt;% filter(totalshots &lt; 2300)
 losses &lt;- shottotal %&gt;% filter(Wins &lt; 25)</code></pre>
-<p>What team truly is the worst team in the recent past? I will be using a scatterplot to highlight the teams who struggled.</p>
+<p>What team truly is the worst team in the recent past? I will be using a scatterplot to highlight the teams who have struggled.</p>
 <p>Here we see those teams.</p>
 <pre class="r"><code>ggplot() + geom_point(data=shottotal, aes(x=Wins, y=totalshots), 
         color=&quot;grey&quot;) +
@@ -154,10 +154,10 @@ losses &lt;- shottotal %&gt;% filter(Wins &lt; 25)</code></pre>
   panel.grid.minor = element_blank()) </code></pre>
 <p><img src="/2021/04/01/shooters-shoot/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Colorado and Detroit are the two teams that we have circled in our chart. We find an interesting trend. Although Colorado had a significantly greater amount of shots, they still ended with less than 25 wins. Let’s take a look at the correlation of this chart.</p>
-<p>We see that the amount of shot’s doesn’t directly influence whether or not a team wins. However, we do see that a majority of teams that have taken more shots tend to win more often.</p>
-<p>Let’s have a look at the 2019 season. Let’s compare the Stanley Cup Champions to the worst performing team. How does the team that won the most sought after trophy in hockey compare to the team at the opposite end of the list?</p>
+<p>We see that the amount of shots doesn’t directly influence whether or not a team wins. However, we do see that a majority of teams that have taken more shots tend to win more often.</p>
+<p>Let’s have a look at the 2019 season and compare the Stanley Cup Champions to the worst performing team. How does the team that won the most sought after trophy in hockey compare to the team at the opposite end of the list?</p>
 <pre class="r"><code>season &lt;- hockey %&gt;% filter(Season == 2019) </code></pre>
-<p>To get the data that I need, I start by creating dataframes that give us the stats for the Tampa Bay Lightning and the Los Angeles Kings.</p>
+<p>To get the data that I need, I start by creating dataframes that give me the stats for the Tampa Bay Lightning and the Los Angeles Kings.</p>
 <pre class="r"><code>tampa &lt;- season %&gt;% filter(Team == &quot;Tampa Bay Lightning&quot;)
 la &lt;- season %&gt;% filter(Team == &quot;Los Angeles Kings&quot;)</code></pre>
 <pre class="r"><code>tbl &lt;- c(&quot;Shots&quot;=2620, &quot;Goals&quot;=319, 0)
@@ -240,7 +240,7 @@ x=&quot;Goals Per Game&quot;, y=&quot;Shots Per Game&quot;)  +
     )</code></pre>
 <p><img src="/2021/04/01/shooters-shoot/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Here we see that the Tampa Bay Lightning have had the best shots on goal to goals scored ratio twice and the Washington Capitals once. An interesting aspect that we can look at is that the top three teams were either just above or just below the average shots per game. If you follow hockey, you probably know that Tampa Bay has been a top tier team throughout the past four years. That being said, does it surprise you that the Lightning are on the chart twice?</p>
-<p>Shots are obviously very important to the game of hockey. However, they are not just numbers that we see on the jumbotron. We can only wonder… will the Lightning continue with their efficient shooting methods in the future?</p>
+<p>Shots are obviously very important to the game of hockey. However, they are not just numbers that we see on the jumbotron. We can only wonder… will the Lightning continue with their efficient shooting in the future?</p>
 
     </div>
   </article>
