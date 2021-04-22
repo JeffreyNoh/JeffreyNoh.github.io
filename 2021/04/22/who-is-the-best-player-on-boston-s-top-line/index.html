@@ -103,7 +103,6 @@ library(waffle)</code></pre>
 <p>The csv file that I have here consists of the team statistics starting from the year that David Pastrnak joined the Bruins. I had the data start that year because that was the first year that all three players started playing together. This data set was pulled from hockey-reference.com.</p>
 <p>Let’s get going.</p>
 <p>The first statistic that I will be looking at here is the overall totals in goals and assists. This will give me an idea of which player has had the best offensive performance over the past seven seasons.</p>
-<p>In order to create the chart that I am looking for, I need to start by using the summarise() function to add up the total goals and total assists for each player. I filtered out Patrice Bergeron, Brad Marchand, and David Pastrnak because they are the three players that we are looking at.</p>
 <pre class="r"><code>bruins %&gt;%
   group_by(Player) %&gt;%
   summarise(
@@ -111,7 +110,7 @@ library(waffle)</code></pre>
     TotalAssists = sum(Assists)
   ) %&gt;% pivot_longer(cols=-Player, names_to=&quot;Type&quot;, values_to=&quot;Total&quot;) %&gt;% 
   filter(Player == &quot;Patrice Bergeron&quot; | Player == &quot;Brad Marchand&quot; | Player == &quot;David Pastrnak&quot;) -&gt; bigthree</code></pre>
-<p>Here we see that Brad Marchand stomps on David Pastrnak and Patrice Bergeron in the total points race. Marchand leads by over 100 points. Something that caught my attention was the number of assists that Marchand has collected. The three players are relatively close in goals scored, but the number of assists stand out in Marchand’s favor.</p>
+<p>In order to create the chart that I am looking for, I need to start by using the summarise() function to add up the total goals and total assists for each player. I filtered out Patrice Bergeron, Brad Marchand, and David Pastrnak because they are the three players that we are looking at.</p>
 <pre class="r"><code>ggplot(bigthree, aes(x=reorder(Player, Total), weight=Total, fill=Type)) +
   geom_bar() +
   coord_flip() + 
@@ -127,7 +126,7 @@ library(waffle)</code></pre>
     panel.grid.minor = element_blank()
     )</code></pre>
 <p><img src="/2021/04/22/who-is-the-best-player-on-boston-s-top-line/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
-This chart is something to keep in mind as we still have plenty of other data to look at in order to compare the players.</p>
+Here we see that Brad Marchand stomps on David Pastrnak and Patrice Bergeron in the total points race. Marchand leads by over 100 points. Something that caught my attention was the number of assists that Marchand has collected. The three players are relatively close in goals scored, but the number of assists stand out in Marchand’s favor.This chart is something to keep in mind as we still have plenty of other data to look at in order to compare the players.</p>
 <p>It is important for teams to have good numbers on the power play. Having more players on the ice gives the team an advantage. However, penalty kills are different. On penalty kills, goals are rare, but that doesn’t mean there aren’t any goals at all. Let’s have a look at the power play and penalty kill numbers.</p>
 <p>To do so, we need to start by calculating the total number of power play goals and assists. We are also going to calculate the penalty kill numbers. In order to get this done, I used summarise() to add up the number of goals and assists. You’ll notice that I added “penalties in minutes.” I did this because I wanted to see who spends the most time in the penalty box. After these steps, I created a new data frame called, “bruinspp.”</p>
 <pre class="r"><code>bruins %&gt;%
