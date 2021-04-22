@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.81.0" />
+
+
+<title>Who is the best player on Boston&#39;s top line? - Jeffrey Noh&#39;s Github</title>
+<meta property="og:title" content="Who is the best player on Boston&#39;s top line? - Jeffrey Noh&#39;s Github">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/jeffreynoh">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/jeffreynoh">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">8 min read</span>
+    
+
+    <h1 class="article-title">Who is the best player on Boston&#39;s top line?</h1>
+
+    
+    <span class="article-date">2021-04-22</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2021/04/22/who-is-the-best-player-on-boston-s-top-line/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>The Boston Bruins drafted David Pastrnak in 2014. The impact that he would come to make with line mates, Brad Marchand and Patrice Bergeron, is something in the Boston organization that fans will remember for a very long time. It’s easy to think of all that they have accomplished together, but we will dive into which one, of the three players, have had the biggest impact and the best statistics playing together as the top line in Boston.</p>
+<p>So, which player performed the best with this line?
+Join me in finding out.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
+## ✓ tibble  3.0.5     ✓ dplyr   1.0.3
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(ggrepel)
+library(waffle)</code></pre>
+<pre class="r"><code>bruins &lt;- read_csv(&quot;bruins15-21.csv&quot;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   .default = col_double(),
+##   Player = col_character(),
+##   Pos = col_character(),
+##   ATOI = col_time(format = &quot;&quot;)
+## )
+## ℹ Use `spec()` for the full column specifications.</code></pre>
+<p>The csv file that I have here consists of the team statistics starting from the year that David Pastrnak joined the Bruins. I had the data start that year because that was the first year that all three players started playing together. This data set was pulled from hockey-reference.com.</p>
+<p>Let’s get going.</p>
+<p>The first statistic that I will be looking at here is the overall totals in goals and assists. This will give me an idea of which player has had the best offensive performance over the past seven seasons.</p>
+<p>In order to create the chart that I am looking for, I need to start by using the summarise() function to add up the total goals and total assists for each player. I filtered out Patrice Bergeron, Brad Marchand, and David Pastrnak because they are the three players that we are looking at.</p>
+<pre class="r"><code>bruins %&gt;%
+  group_by(Player) %&gt;%
+  summarise(
+    TotalGoals = sum(Goals),
+    TotalAssists = sum(Assists)
+  ) %&gt;% pivot_longer(cols=-Player, names_to=&quot;Type&quot;, values_to=&quot;Total&quot;) %&gt;% 
+  filter(Player == &quot;Patrice Bergeron&quot; | Player == &quot;Brad Marchand&quot; | Player == &quot;David Pastrnak&quot;) -&gt; bigthree</code></pre>
+<p>Here we see that Brad Marchand stomps on David Pastrnak and Patrice Bergeron in the total points race. Marchand leads by over 100 points. Something that caught my attention was the number of assists that Marchand has collected. The three players are relatively close in goals scored, but the number of assists stand out in Marchand’s favor.</p>
+<pre class="r"><code>ggplot(bigthree, aes(x=reorder(Player, Total), weight=Total, fill=Type)) +
+  geom_bar() +
+  coord_flip() + 
+  labs(x=&quot;Player&quot;, y=&quot;Career Points&quot;, 
+       title=&quot;Brad Marchand may look funky, but his numbers don&#39;t lie&quot;, 
+       subtitle=&quot;Marchand leads Boston&#39;s Big Three by nearly one hundred points.&quot;, 
+       caption=&quot;Source: hockey-reference | By Jeffrey Noh&quot;) + 
+  theme_minimal() + 
+  theme(
+    plot.title = element_text(size = 16, face = &quot;bold&quot;),
+    axis.title = element_text(size = 8), 
+    plot.subtitle = element_text(size=10), 
+    panel.grid.minor = element_blank()
+    )</code></pre>
+<p><img src="/2021/04/22/who-is-the-best-player-on-boston-s-top-line/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+This chart is something to keep in mind as we still have plenty of other data to look at in order to compare the players.</p>
+<p>It is important for teams to have good numbers on the power play. Having more players on the ice gives the team an advantage. However, penalty kills are different. On penalty kills, goals are rare, but that doesn’t mean there aren’t any goals at all. Let’s have a look at the power play and penalty kill numbers.</p>
+<p>To do so, we need to start by calculating the total number of power play goals and assists. We are also going to calculate the penalty kill numbers. In order to get this done, I used summarise() to add up the number of goals and assists. You’ll notice that I added “penalties in minutes.” I did this because I wanted to see who spends the most time in the penalty box. After these steps, I created a new data frame called, “bruinspp.”</p>
+<pre class="r"><code>bruins %&gt;%
+  group_by(Player) %&gt;%
+  summarise(
+    TotalPPGoals = sum(PPGoals),
+    TotalPPAssists = sum(PPAssists),
+    TotalSHGoals = sum(SHGoals),
+    TotalSHAssists = sum(SHAssists),
+    TotalPIM = sum(PIM)) %&gt;%
+      mutate(
+        Powerplaypoints = TotalPPGoals+TotalPPAssists,
+        Shorthandedpoints = TotalSHGoals+TotalSHAssists
+      ) -&gt; bruinspp</code></pre>
+<pre class="r"><code>bigthree &lt;- bruinspp %&gt;% 
+  filter(Player == &quot;Patrice Bergeron&quot; | Player == &quot;Brad Marchand&quot; | Player == &quot;David Pastrnak&quot;)</code></pre>
+<p>Now, to visualise this data, I will be using a bubble chart. In this bubble chart, I have Bergeron, Marchand, and Pastrnak highlighted in yellow. On the x-axis, I have the power play total points and on the y-axis, I have the shorthanded/penalty kill total points. For reference, I have added in all the Bruin players that have played within the seven years in our data.
+Additionally, I have added red lines which represent the average shorthanded and power play points.</p>
+<pre class="r"><code>ggplot() + 
+  geom_point(
+    data = bruinspp, 
+    aes(Powerplaypoints, y=Shorthandedpoints, size=TotalPIM),
+    color=&quot;#000000&quot;,
+    alpha=.3) +
+  scale_size(range = c(3,8), name=&quot;Penalties in Minutes&quot;) +
+  geom_point(
+    data = bigthree,
+    aes(Powerplaypoints, y=Shorthandedpoints, size=TotalPIM),
+    color=&quot;#FCB60C&quot;) +
+  geom_vline(xintercept = 9.351852, color=&quot;red&quot;) +
+  geom_hline(yintercept = 1.083333, color=&quot;red&quot;) +
+  geom_text_repel(
+    data = bigthree, 
+    aes(x=Powerplaypoints, y=Shorthandedpoints, label=Player),
+    size=2.5 
+  ) +
+  geom_text(aes(y=2.8, x=60, 
+  label=&quot;Avg. Short Handed Points&quot;), 
+  color=&quot;black&quot;, 
+  size=2.5) + 
+  geom_text(aes(y=15, x=29, 
+  label=&quot;Avg. Power Play Points&quot;), 
+  color=&quot;black&quot;, 
+  size=2.5) +
+  labs(title=&quot;Marchand strong short handed and on power plays&quot;, 
+       subtitle=&quot;Brad Marchand spends plenty of time in the penalty box, but when on the ice, the production is there&quot;, caption=&quot;Source: hockey-reference | By Jeffrey Noh&quot;, 
+       x=&quot;Power Play Points&quot;,
+       y=&quot;Short Handed Points&quot;,
+       size=4)  + 
+  theme_minimal() + 
+  theme(
+    plot.title = element_text(size = 16, face = &quot;bold&quot;),
+    axis.title = element_text(size = 8), 
+    plot.subtitle = element_text(size=10), 
+    panel.grid.minor = element_blank()
+    )</code></pre>
+<p><img src="/2021/04/22/who-is-the-best-player-on-boston-s-top-line/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+We see in our chart that our three players stand out in a big way. Both Marchand and Bergeron are well above both lines that mark the averages. Although Pastrnak is below the average shorthanded points line, he has a very slight lead when it comes to power play points.
+Another fact to note that we see in this chart is that Brad Marchand has spent an overwhelming amount of time in the penalty box. That doesn’t seem to hurt his numbers too much as he leads in shorthanded points and is just behind Bergeron in power play points.</p>
+<pre class="r"><code>bruinspp %&gt;% 
+  ungroup() %&gt;%
+  summarise(
+    pp = mean(Powerplaypoints),
+    sh = mean(Shorthandedpoints)
+  )</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##      pp    sh
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1  9.35  1.08</code></pre>
+<p>At this point, it seems as though Brad Marchand will be named the best player out of Boston’s Big Three.
+We all know that goals and assists have a huge impact on the outcome of hockey games, but they aren’t the only factors that go into being a respected player on a team.
+That being said, let’s take a look into the physical play.
+To start, I will be calculating the total shot blocks and total hits produced by our three players.</p>
+<pre class="r"><code>physical &lt;- bruins %&gt;% 
+  group_by(Player) %&gt;%
+  summarise(
+    Totalblocks = sum(BLK),
+    Totalhits = sum(HIT)
+  ) %&gt;%
+  filter(Player == &quot;Patrice Bergeron&quot; | Player == &quot;Brad Marchand&quot; | Player == &quot;David Pastrnak&quot;)</code></pre>
+<p>To show the difference of blocked shots and hits between Bergeron, Marchand, and Pastrnak, I will be using a waffle chart.</p>
+<pre class="r"><code>BM &lt;- c(&quot;Blocked Shots&quot;=170, &quot;Hits&quot;=373, 160)
+DP &lt;- c(&quot;Blocked Shots&quot;=146, &quot;Hits&quot;=327, 230)
+PB &lt;- c(&quot;Blocked Shots&quot;=339, &quot;Hits&quot;=364)</code></pre>
+<p>This chart will show the number of hits and blocks that each player was credited with. With each square representing five plays, we will be able to see who has the biggest physical impact.</p>
+<pre class="r"><code>iron( 
+  waffle(PB/5,
+         rows = 8,
+         xlab = &quot;1 square = 5 Plays&quot;,
+         colors = c(&quot;#fcb514&quot;, &quot;black&quot;, &quot;white&quot;)) + 
+   labs(title=&quot;Boston&#39;s Big Three: Physical Presence&quot;, 
+        subtitle=&quot;Patrice Bergeron does the best job at giving up his body for his team.&quot;) + 
+   theme(
+    plot.title = element_text(size = 18, face = &quot;bold&quot;),
+    axis.title = element_text(size = 10),
+    axis.title.y = element_blank()
+         ),
+  waffle(BM/5,
+         rows = 8,
+         title = &quot;Brad Marchand&quot;,
+         xlab = &quot;1 square = 5 Plays&quot;,
+         colors = c(&quot;#fcb514&quot;, &quot;black&quot;, &quot;white&quot;)
+         ),
+  waffle(DP/5,
+         rows = 8,
+         title = &quot;David Pastrnak&quot;,
+         xlab = &quot;1 square = 5 Plays&quot;,
+         colors = c(&quot;#fcb514&quot;, &quot;black&quot;, &quot;white&quot;)) + 
+    labs(caption=&quot;Source: hockey-reference | Graphic by Jeffrey Noh&quot;)
+         )</code></pre>
+<p><img src="/2021/04/22/who-is-the-best-player-on-boston-s-top-line/index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+This chart gives us a great visual of the difference in blocked shots and hits.
+All three players have a similar amount of hits, but blocked shots is what I want to look at.
+The reason why I personally believe that blocked shots are more important is because blocked shots take away the opposing teams’ chances of scoring a goal because the shots don’t get through. As we see, Patrice Bergeron has done the best job at keeping the shots from getting through while Brad Marchand has a one square advantage when it comes to hits.</p>
+<p>After diving into the data and visualizing it, this line has generated a great amount of excitement for Bruin fans. When it comes down to who contributes the most, I would have to go with Brad Marchand. The reasoning behind this would be because Marchand really stood out from Pastrnak and Bergeron in the first two charts. Although he wasn’t the top guy for the third chart, he did lead in hits showing that he is a great physical player. Looking at overall performace, Brad Marchand is the player that is the most well rounded.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
