@@ -62,7 +62,7 @@
 
   <article class="article">
     
-    <span class="article-duration">8 min read</span>
+    <span class="article-duration">7 min read</span>
     
 
     <h1 class="article-title">Who is the best player on Boston&#39;s top line?</h1>
@@ -77,29 +77,12 @@
 
 
 <p>The Boston Bruins drafted David Pastrnak in 2014. The impact that he would come to make with line mates, Brad Marchand and Patrice Bergeron, is something in the Boston organization that fans will remember for a very long time. It’s easy to think of all that they have accomplished together, but we will dive into which one of the three players has had the biggest impact and the best statistics playing together as the top line in Boston.</p>
-<p>So, which player performed the best with this line?
+<p>Which player performs the best with this line?
 Join me in finding out.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
-## ✓ tibble  3.0.5     ✓ dplyr   1.0.3
-## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.4.0     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(ggrepel)
+<pre class="r"><code>library(tidyverse)
+library(ggrepel)
 library(waffle)</code></pre>
 <pre class="r"><code>bruins &lt;- read_csv(&quot;bruins15-21.csv&quot;)</code></pre>
-<pre><code>## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   .default = col_double(),
-##   Player = col_character(),
-##   Pos = col_character(),
-##   ATOI = col_time(format = &quot;&quot;)
-## )
-## ℹ Use `spec()` for the full column specifications.</code></pre>
 <p>The csv file that I have here consists of the team statistics starting from the year that David Pastrnak joined the Bruins. I had the data start that year because that was the first year that all three players started playing together. This data set was pulled from hockey-reference.com.</p>
 <p>Let’s get going.</p>
 <p>The first statistic that I will be looking at here is the overall totals in goals and assists. This will give me an idea of which player has had the best offensive performance over the past seven seasons.</p>
