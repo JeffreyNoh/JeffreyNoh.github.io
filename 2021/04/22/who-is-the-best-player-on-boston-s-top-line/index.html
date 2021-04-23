@@ -76,7 +76,7 @@
 <script src="/2021/04/22/who-is-the-best-player-on-boston-s-top-line/index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>The Boston Bruins drafted David Pastrnak in 2014. The impact that he would come to make with line mates, Brad Marchand and Patrice Bergeron, is something in the Boston organization that fans will remember for a very long time. It’s easy to think of all that they have accomplished together, but we will dive into which one, of the three players, have had the biggest impact and the best statistics playing together as the top line in Boston.</p>
+<p>The Boston Bruins drafted David Pastrnak in 2014. The impact that he would come to make with line mates, Brad Marchand and Patrice Bergeron, is something in the Boston organization that fans will remember for a very long time. It’s easy to think of all that they have accomplished together, but we will dive into which one of the three players has had the biggest impact and the best statistics playing together as the top line in Boston.</p>
 <p>So, which player performed the best with this line?
 Join me in finding out.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
@@ -143,7 +143,7 @@ Here we see that Brad Marchand stomps on David Pastrnak and Patrice Bergeron in 
       ) -&gt; bruinspp</code></pre>
 <pre class="r"><code>bigthree &lt;- bruinspp %&gt;% 
   filter(Player == &quot;Patrice Bergeron&quot; | Player == &quot;Brad Marchand&quot; | Player == &quot;David Pastrnak&quot;)</code></pre>
-<p>Now, to visualise this data, I will be using a bubble chart. In this bubble chart, I have Bergeron, Marchand, and Pastrnak highlighted in yellow. On the x-axis, I have the power play total points and on the y-axis, I have the shorthanded/penalty kill total points. For reference, I have added in all the Bruin players that have played within the seven years in our data.
+<p>Now, to visualise this data, I will be using a bubble chart. In this bubble chart, I have Bergeron, Marchand, and Pastrnak highlighted in yellow. On the x-axis, I have the power play total points and, on the y-axis, I have the shorthanded/penalty kill total points. For reference, I have added in all the Bruin players that have played within the seven years into our data.
 Additionally, I have added red lines which represent the average shorthanded and power play points.</p>
 <pre class="r"><code>ggplot() + 
   geom_point(
